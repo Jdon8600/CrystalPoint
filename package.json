@@ -1,0 +1,23 @@
+{
+  "name": "crystalpoint",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jdon8600/CrystalPoint.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jdon8600/CrystalPoint/issues"
+  },
+  "homepage": "https://github.com/Jdon8600/CrystalPoint#readme",
+  "dependencies": {
+    "phaser": "^3.55.2"
+  }
+}
