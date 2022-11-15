@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Jdon8600/CrystalPoint#readme",
   "dependencies": {
+    "bootstrap": "^5.2.2",
     "phaser": "^3.55.2"
   }
 }
