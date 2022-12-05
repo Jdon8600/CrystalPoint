@@ -1,0 +1,122 @@
+<html lang = "en">
+    <head>
+    <style>
+    body {
+        background-image: url('https://c4.wallpaperflare.com/wallpaper/932/333/272/artwork-science-fiction-space-art-space-wallpaper-preview.jpg');
+        background-repeat:no-repeat;
+        background-size:cover;
+        background-position: center;
+        overflow: hidden;
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 50% 0 0 0;
+    }
+    
+    
+    .wrapper{
+        display: flex;
+        height: 100%;
+        width: 60%;
+        margin: 0 auto;
+        perspective: 450px;
+    }
+    
+    .scroll-text {
+        color: gold;
+        font-size: 3vw;
+        line-height: 1.5em;
+        font-weight: bold;
+        text-align: justify;
+        position: relative;
+        animation: scroll 200s linear forwards;
+       
+    }
+    
+    h1,h2 {
+        text-align: center;
+    }
+    
+    .p2 {
+        color:chartreuse;
+        text-align: center;
+    }
+    .pic1{
+        width:60px;
+        height:40px;
+        border-radius: 25px;
+        background-position: fixed;
+        opacity: 0.5;
+    }
+    .pic1:hover {
+        opacity: 1;
+    }
+    .dropdown{
+        position: absolute;
+        top: 10%;
+        right: 10%;
+
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: green;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        border: 2px solid black;
+        border-radius: 25px;
+    }
+        .dropdown:hover .dropdown-content {
+            display:inline-block;
+        }
+    .p3 {
+        color:rgb(8, 15, 1);
+        text-align: center;
+        font-size: 1.5vw;
+    }
+        
+    
+    #youtube-audio{
+color:aliceblue;
+    }
+    
+    @keyframes scroll{
+        from{top: 0; transform: translateZ(0) rotateX(20deg)}
+        to{top: -7500px; transform: translateZ(-2500px) rotateX(21deg) ;}
+    }
+        </style>
+        <meta charset = "UTF-8">
+        <title>Crystal Point Story</title>
+    </head>
+    
+<body style="background-image: url('https://c4.wallpaperflare.com/wallpaper/932/333/272/artwork-science-fiction-space-art-space-wallpaper-preview.jpg'); background-repeat:no-repeat;">
+    <div  data-video="TAOkiZSIkpc" data-autoplay="data-autoplay" data-loop="1" id="youtube-audio"></div>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://cdn.rawgit.com/labnol/files/master/yt.js"></script>
+    </div>
+    <div class="dropdown" style="float:right;">
+    <p style="text-align:right;"><img class="pic1" src="https://i.postimg.cc/G3JknB0m/image.jpg" alt="another planet"></p>
+    <div class="dropdown-content">
+        <p class="p3">Planet Zavala. Once uninhabitted has now become a beacon of refuge for those traveling between the interplanetary space station and Earth</p>
+        </div>
+    </div>
+    <div class ="wrapper">
+    <div class = "scroll-text">
+        <h1> CRYSTAL POINT ORIGIN</h1>
+        <h2>A new frontier</h2>
+        <p> Long....long...ago, the Earth was a vibrant planet inhabited by many forms of life</p>
+        <p> However.....that is when disaster struck!</p>
+        <p>Welcome to Crystal Point. The story begins 500 years in the future</p>
+        <p>When the Earth was hit by a meteorite with a quarter of the size of chicxulub</p>
+        <p>It was a devastating event that caused the extinction of many species</p>
+        <p>Earth and its inhabitants were forced to join forces and collaborate with one another despite all the obstacles that separated them</p>
+        <p>It was a time of great change and the beginning of a new era</p>
+        <p> In order to usher in a new age of stability and peace, a hero needed to emerge</p>
+        <p>In order to save planet Earth, celestial crytsals needed to be gathered</p>
+        <p>However, this will prove to be no easy journey. As our hero will soon find out.</p>
+        <br>
+        <br>
+
+        <p class="p2"> &#128142;Welcome to Crystal Point!&#128142;</p>
+    </div>
+</body>
+</html>
