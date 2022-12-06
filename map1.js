@@ -36,7 +36,13 @@ var pause = false;
 var jumpSound;
 var deathSound;
 var gameOverSound;
-var text;
+var restartLevelButton;
+var returnMenuButton;
+var musicButton;
+var resumeGameButton;
+var pauseGameButton;
+var health = 3;
+var gamePaused = false;
 
 function preload ()
 {
@@ -45,6 +51,13 @@ function preload ()
     this.load.image('spikes', 'assets2/spikes.png');
     this.load.tilemapTiledJSON('map', 'assets2/map10.JSON');
     this.load.image('player', 'assets2/phaser-dude.png');
+
+    // load restart level button, return to menu button, music button, resume game button, pause game button
+    this.load.image('restartLevelButton', 'assets2/restartLevelButton4.png');
+    this.load.image('returnMenuButton', 'assets2/returnMenuButton2.png');
+    this.load.image('musicButton', 'assets2/musicButton2.png');
+    this.load.image('resumeGameButton', 'assets2/resumeGameButton3.png');
+    this.load.image('pauseGameButton', 'assets2/pauseGameButton2.png');
 
     this.load.audio('coinCollectSound', 'assets2/coinCollectSound.mp3');
     this.load.audio('mapLevelMusic', 'assets2/mapLevelMusic.mp3');
@@ -80,6 +93,66 @@ function create ()
     // Load sounds
     music = this.sound.add('mapLevelMusic');
     music.play();
+
+    // when the musicButton is clicked, stop playing the music, if it is pressed again, play the music
+    musicButton = this.add.image(750, 50, 'musicButton').setInteractive();
+    musicButton.on('pointerdown', function (event) {
+        if (music.isPlaying) {
+            music.stop();
+        } else {
+            music.play();
+        }
+    });
+
+    // create a function pause that stops the game from updating and rendering
+    function pause(context) {
+        context.scene.pause();
+        gamePaused = true;
+    }
+
+    // create a function resume that resumes the game from updating and rendering
+    function resume(context) {
+        context.scene.resume();
+        gamePaused = false;
+    }
+
+    // when the pauseGameButton is clicked, pause the game
+    pauseGameButton = this.add.image(700, 50, 'pauseGameButton').setInteractive();
+    pauseGameButton.on('pointerdown', function (event) {
+        pause(this);
+    });
+
+    // when the resumeGameButton is clicked, resume the game
+
+    resumeGameButton = this.add.image(650, 50, 'resumeGameButton').setInteractive();
+    resumeGameButton.on('pointerdown', function (event) {
+        resume(this);
+    });
+
+
+    // when the restartLevelButton is clicked, restart the level by reloading the page
+    restartLevelButton = this.add.image(600, 50, 'restartLevelButton').setInteractive();
+    restartLevelButton.on('pointerdown', function (event) {
+        window.location.reload();
+    });
+
+
+    // when the returnMenuButton is clicked, return to the index.html page
+    returnMenuButton = this.add.image(550, 50, 'returnMenuButton').setInteractive();
+    returnMenuButton.on('pointerdown', function (event) {
+        window.location.href = "index.html";
+    });
+
+    // the buttons should be located on top right of the screen and should follow the camera
+    musicButton.setScrollFactor(0);
+    pauseGameButton.setScrollFactor(0);
+    resumeGameButton.setScrollFactor(0);
+    restartLevelButton.setScrollFactor(0);
+    returnMenuButton.setScrollFactor(0);
+
+    // make the restartLevel button a little smaller
+    restartLevelButton.setScale(0.8);
+
 
     jumpSound = this.sound.add('jumpSound');
     mapLevelMusic = this.sound.add('mapLevelMusic');
@@ -151,10 +224,6 @@ function hitCoin (sprite, tile)
     return false;
 
 }
-
-// create a health variable for the player
-var health = 3;
-
 
 
 
