@@ -35,6 +35,14 @@ function preload ()
     this.load.image('spikes', 'assets2/spikes.png');
     this.load.tilemapTiledJSON('map', 'assets2/map20.JSON');
     this.load.image('player', 'assets2/phaser-dude.png');
+
+    this.load.audio('coinCollectSound', 'assets2/coinCollectSound.mp3');
+    this.load.audio('mapLevelMusic', 'assets2/mapLevelMusic.mp3');
+    this.load.audio('mapCompleteSound', 'assets2/mapCompleteSound.mp3');
+    this.load.audio('pauseSound', 'assets2/pauseSound.mp3');
+    this.load.audio('jumpSound', 'assets2/jumpSound.mp3');
+    this.load.audio('deathSound', 'assets2/deathSound.mp3');
+    this.load.audio('gameOverSound', 'assets2/gameOverSound.mp3');
 }
 
 function create ()
@@ -57,6 +65,17 @@ function create ()
     var groundLayer = map.createStaticLayer('Ground Layer', groundTiles, 0, 0);
     var spikeLayer = map.createDynamicLayer('Spike Layer', spikeTiles, 0, 0);
     var coinLayer = map.createDynamicLayer('Coin Layer', coinTiles, 0, 0);
+
+    // Load sounds
+    music = this.sound.add('mapLevelMusic');
+    music.play();
+
+    jumpSound = this.sound.add('jumpSound');
+    mapLevelMusic = this.sound.add('mapLevelMusic');
+    mapCompleteSound = this.sound.add('mapCompleteSound');
+    pauseSound = this.sound.add('pauseSound');
+    deathSound = this.sound.add('deathSound');
+    gameOverSound = this.sound.add('gameOverSound');
     
 
     groundLayer.setCollisionBetween(1, 25);
@@ -110,7 +129,9 @@ function hitCoin (sprite, tile)
     //remove the tile/coin
    // coinLayer.removeTileAt(tile.x, tile.y);
     map.removeTileAt(tile.x, tile.y, true, coinLayer);
-
+    //Play sound when you collect a coin
+    coinCollectSound = this.sound.add('coinCollectSound');
+    coinCollectSound.play();
     coinsCollected += 1;
     updateText();
 
@@ -127,6 +148,9 @@ var health = 4;
 function hitSpike (player, spike)
 {
     health -= 1;
+    // play a sound when the player hits a spike
+    deathSound = this.sound.add('deathSound');
+    deathSound.play();
     player.x = 80;
     player.y = 70;
     updateText();
@@ -160,6 +184,9 @@ function update (time, delta)
     if ((cursors.space.isDown || cursors.up.isDown) && player.body.onFloor())
     {
         player.body.setVelocityY(-300);
+        //play sound when you jump and reduce the volume
+        jumpSound = this.sound.add('jumpSound');
+        jumpSound.play();
     }
 }
 
