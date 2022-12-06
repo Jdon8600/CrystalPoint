@@ -2,6 +2,7 @@ var config = {
     type: Phaser.WEBGL,
     width: 800,
     height: 576,
+    autoCenter: true,
     backgroundColor: '#2d2d2d',
     parent: 'phaser-example',
     pixelArt: true,

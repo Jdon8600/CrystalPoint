@@ -4,3 +4,7 @@ function login(){
 function story(){
     window.location.href = 'StoryPage.html';
 }
+
+function game(){
+    window.location.href = 'game.html';
+}
