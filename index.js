@@ -1,10 +1,10 @@
-function login(){
-    window.location.href = 'login.html';
+function login() {
+  window.location.href = "login.html";
 }
-function story(){
-    window.location.href = 'StoryPage.html';
+function story() {
+  window.location.href = "StoryPage.html";
 }
 
-function game(){
-    window.location.href = 'game.html';
+function game() {
+  window.location.href = "game.html";
 }
