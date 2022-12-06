@@ -95,7 +95,7 @@ function create ()
     music.play();
 
     // when the musicButton is clicked, stop playing the music, if it is pressed again, play the music
-    musicButton = this.add.image(750, 50, 'musicButton').setInteractive();
+    musicButton = this.add.image(700, 50, 'musicButton').setInteractive();
     musicButton.on('pointerdown', function (event) {
         if (music.isPlaying) {
             music.stop();
@@ -104,49 +104,22 @@ function create ()
         }
     });
 
-    // create a function pause that stops the game from updating and rendering
-    function pause(context) {
-        context.scene.pause();
-        gamePaused = true;
-    }
-
-    // create a function resume that resumes the game from updating and rendering
-    function resume(context) {
-        context.scene.resume();
-        gamePaused = false;
-    }
-
-    // when the pauseGameButton is clicked, pause the game
-    pauseGameButton = this.add.image(700, 50, 'pauseGameButton').setInteractive();
-    pauseGameButton.on('pointerdown', function (event) {
-        pause(this);
-    });
-
-    // when the resumeGameButton is clicked, resume the game
-
-    resumeGameButton = this.add.image(650, 50, 'resumeGameButton').setInteractive();
-    resumeGameButton.on('pointerdown', function (event) {
-        resume(this);
-    });
-
 
     // when the restartLevelButton is clicked, restart the level by reloading the page
-    restartLevelButton = this.add.image(600, 50, 'restartLevelButton').setInteractive();
+    restartLevelButton = this.add.image(750, 50, 'restartLevelButton').setInteractive();
     restartLevelButton.on('pointerdown', function (event) {
         window.location.reload();
     });
 
 
     // when the returnMenuButton is clicked, return to the index.html page
-    returnMenuButton = this.add.image(550, 50, 'returnMenuButton').setInteractive();
+    returnMenuButton = this.add.image(650, 50, 'returnMenuButton').setInteractive();
     returnMenuButton.on('pointerdown', function (event) {
         window.location.href = "index.html";
     });
 
     // the buttons should be located on top right of the screen and should follow the camera
     musicButton.setScrollFactor(0);
-    pauseGameButton.setScrollFactor(0);
-    resumeGameButton.setScrollFactor(0);
     restartLevelButton.setScrollFactor(0);
     returnMenuButton.setScrollFactor(0);
 
@@ -226,7 +199,6 @@ function hitCoin (sprite, tile)
 }
 
 
-
 // create a function to handle the player hitting a spike
 // when the player hits a spike, they lose a health point and are moved back to the start
 function hitSpike (player, spike)
@@ -242,7 +214,8 @@ function hitSpike (player, spike)
     // if the player has no health left, end the game
     if (health == 0)
     {
-        gameOver();
+        // refresh the page to restart the game
+        window.location.reload();
     }
 
 
