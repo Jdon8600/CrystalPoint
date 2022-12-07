@@ -43,6 +43,10 @@ var resumeGameButton;
 var pauseGameButton;
 var health = 3;
 var gamePaused = false;
+var timer;
+var totalElapsedSeconds = 0;
+
+
 
 function preload ()
 {
@@ -177,6 +181,34 @@ function create ()
     });
     text.setScrollFactor(0);
     updateText();
+
+    //add a timer
+    var updateTimer = function() {
+        totalElapsedSeconds++;
+        var minutes = Math.floor(totalElapsedSeconds / 60);
+        var seconds = totalElapsedSeconds - minutes * 60;
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        timer.setText("Time: " + minutes + ":" + seconds);
+    };
+
+    
+    timer = this.add.text(15, 75, '0:00', {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
+    timer.setScrollFactor(0);
+    this.time.addEvent({
+        delay: 1000,
+        callback: updateTimer,
+        callbackScope: this,
+        loop: true
+    });
+
+
+ 
+
 }
 
 
@@ -211,6 +243,8 @@ function hitSpike (player, spike)
     player.x = 80; 
     player.y = 70; 
     updateText();
+
+
     // if the player has no health left, end the game
     if (health == 0)
     {
@@ -221,15 +255,8 @@ function hitSpike (player, spike)
 
 }
 
-// When the player's health reaches 0, the game ends and a message is displayed
-function updateText ()
-{
-    if (health == 0) {
-        text.setText('Game Over');
-    } else {
-        text.setText('Coins: ' + coinsCollected + ' Health: ' + health);
-    }
-}
+
+
 
 
 function update (time, delta) 
@@ -274,11 +301,16 @@ function drawDebug ()
     updateText();
 }
 
+
+
+
+
+// create a function to update the text on the screen
 function updateText ()
 {
     text.setText(
         'Arrow keys to move. Space to jump' +
         '\nCrystals collected: ' + coinsCollected + '/10' +
-        '\nLives: ' + health
-    );
+        '\nLives: ' + health + '/3');
+
 }
