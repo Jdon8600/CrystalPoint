@@ -146,12 +146,7 @@ function create ()
 
     spikeLayer.setTileIndexCallback(26, hitSpike, this);
 
-    // This will set the map location (2, 0) to call the function "hitSecretDoor" Un-comment this to
-    // be jump through the ceiling above where the player spawns. You can use this to create a
-    // secret area.
-    //groundLayer.setTileLocationCallback(2, 0, 1, 1, hitSecretDoor, this);
 
-    //
 
     player = this.physics.add.sprite(80, 70, 'player') 
         .setBounce(0.0);
@@ -199,7 +194,7 @@ function create ()
 
         }
         if (this.time.paused == true) {
-            text.setText("Game Over! You collected all " + coinsCollected + " coins in " + minutes + " minutes and " + seconds + " seconds" +  "\n Click the arrow to play again!");
+            text.setText("Game Over! You collected all " + coinsCollected + " coins in " + minutes + " minute/s and " + seconds + " seconds" +  "\n Click the arrow to play again!");
     
         }
 
