@@ -178,6 +178,10 @@ function create ()
         if (coinsCollected == totalCoins) {
             // pause the timer
             this.time.paused = true;
+            // stop the player from moving
+            player.body.moves = false;
+            // play the mapCompleteSound
+            mapCompleteSound.play();
 
         }
         if (this.time.paused == true) {
