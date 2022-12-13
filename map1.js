@@ -45,6 +45,7 @@ var health = 3;
 var gamePaused = false;
 var timer;
 var totalElapsedSeconds = 0;
+var totalCoins = 10;
 
 
 
@@ -191,6 +192,12 @@ function create ()
             seconds = "0" + seconds;
         }
         timer.setText("Time: " + minutes + ":" + seconds);
+        // if coinsCollected == totalCoins, stop the timer
+        if (coinsCollected == totalCoins) {
+            // pause the timer
+            this.time.paused = true;
+
+        }
     };
 
     
