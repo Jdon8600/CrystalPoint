@@ -44,13 +44,14 @@ var health = 3;
 var gamePaused = false;
 var timer;
 var totalElapsedSeconds = 0;
+var totalCoins = 12;
 
 function preload ()
 {
     this.load.image('ground_1x1', 'assets2/ground_1x1.png');
     this.load.spritesheet('coin', 'assets2/coin.png', { frameWidth: 16, frameHeight: 16 });
     this.load.image('spikes', 'assets2/spikes.png');
-    this.load.tilemapTiledJSON('map', 'assets2/map5.JSON');
+    this.load.tilemapTiledJSON('map', 'assets2/map20.JSON');
     this.load.image('player', 'assets2/phaser-dude.png');
 
     // load restart level button, return to menu button, music button, resume game button, pause game button
@@ -67,7 +68,6 @@ function preload ()
     this.load.audio('jumpSound', 'assets2/jumpSound.mp3');
     this.load.audio('deathSound', 'assets2/deathSound.mp3');
     this.load.audio('gameOverSound', 'assets2/gameOverSound.mp3');
-
 }
 
 function create ()
@@ -138,9 +138,9 @@ function create ()
     groundLayer.setCollisionBetween(1, 25);
 
     // This will set Tile ID (the coin tile) to call the function "hitCoin" when collided with
-    coinLayer.setTileIndexCallback(27, hitCoin, this);
+    coinLayer.setTileIndexCallback(1, hitCoin, this);
 
-    spikeLayer.setTileIndexCallback(1, hitSpike, this);
+    spikeLayer.setTileIndexCallback(27, hitSpike, this);
 
     // This will set the map location (2, 0) to call the function "hitSecretDoor" Un-comment this to
     // be jump through the ceiling above where the player spawns. You can use this to create a
@@ -188,6 +188,11 @@ function create ()
             seconds = "0" + seconds;
         }
         timer.setText("Time: " + minutes + ":" + seconds);
+        if (coinsCollected == totalCoins) {
+            // pause the timer
+            this.time.paused = true;
+
+        }
     };
 
     
@@ -222,7 +227,7 @@ function hitCoin (sprite, tile)
 }
 
 // create a health variable for the player
-var health = 5;
+var health = 4;
 
 // create a function to handle the player hitting a spike
 // when the player hits a spike, they lose a health point and are moved back to the start
@@ -242,6 +247,8 @@ function hitSpike (player, spike)
         window.location.reload();
     }
 }
+
+
 
 
 function update (time, delta) 
@@ -288,7 +295,8 @@ function updateText ()
 {
     text.setText(
         'Arrow keys to move. Space to jump' +
-        '\nCrystals Collected: ' + coinsCollected + '/15' +
-        '\nLives: ' + health + '/5'
+        '\nCrystals Collected: ' + coinsCollected + '/12' +
+        '\nLives: ' + health + '/4'
+
     );
 }
