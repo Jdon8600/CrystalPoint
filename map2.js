@@ -40,7 +40,7 @@ var returnMenuButton;
 var musicButton;
 var resumeGameButton;
 var pauseGameButton;
-var health = 3;
+var health = 4;
 var gamePaused = false;
 var timer;
 var totalElapsedSeconds = 0;
