@@ -193,6 +193,10 @@ function create ()
             this.time.paused = true;
 
         }
+        if (this.time.paused == true) {
+            text.setText("Game Over! You collected all " + coinsCollected + " coins in " + minutes + " minutes and " + seconds + " seconds" +  "\n Click the arrow to play again!");
+    
+        }
     };
 
     
