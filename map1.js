@@ -76,10 +76,9 @@ function preload ()
 
 function create ()
 {
-<<<<<<< HEAD
-=======
 
->>>>>>> 0588f07a859443236b1cbedca769ea012565236c
+
+
     map = this.make.tilemap({ key: 'map' });
     var groundTiles = map.addTilesetImage('ground_1x1');
     var coinTiles = map.addTilesetImage('coin');
