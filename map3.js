@@ -27,6 +27,24 @@ var groundLayer;
 var coinLayer;
 var spikeLayer;
 var coinsCollected = 0;
+var coinCollectSound;
+var mapLevelMusic;
+var mapCompleteSound;
+var pauseSound;
+var pause = false;
+var jumpSound;
+var deathSound;
+var gameOverSound;
+var restartLevelButton;
+var returnMenuButton;
+var musicButton;
+var resumeGameButton;
+var pauseGameButton;
+var health = 5;
+var gamePaused = false;
+var timer;
+var totalElapsedSeconds = 0;
+var totalCoins = 15;
 
 function preload ()
 {
@@ -36,6 +54,13 @@ function preload ()
     this.load.tilemapTiledJSON('map', 'assets2/map5.JSON');
     this.load.image('player', 'assets2/phaser-dude.png');
 
+    // load restart level button, return to menu button, music button, resume game button, pause game button
+    this.load.image('restartLevelButton', 'assets2/restartLevelButton4.png');
+    this.load.image('returnMenuButton', 'assets2/returnMenuButton2.png');
+    this.load.image('musicButton', 'assets2/musicButton2.png');
+    this.load.image('resumeGameButton', 'assets2/resumeGameButton3.png');
+    this.load.image('pauseGameButton', 'assets2/pauseGameButton2.png');
+
     this.load.audio('coinCollectSound', 'assets2/coinCollectSound.mp3');
     this.load.audio('mapLevelMusic', 'assets2/mapLevelMusic.mp3');
     this.load.audio('mapCompleteSound', 'assets2/mapCompleteSound.mp3');
@@ -43,6 +68,7 @@ function preload ()
     this.load.audio('jumpSound', 'assets2/jumpSound.mp3');
     this.load.audio('deathSound', 'assets2/deathSound.mp3');
     this.load.audio('gameOverSound', 'assets2/gameOverSound.mp3');
+
 }
 
 function create ()
@@ -69,6 +95,38 @@ function create ()
     // Load sounds
     music = this.sound.add('mapLevelMusic');
     music.play();
+
+    // when the musicButton is clicked, stop playing the music, if it is pressed again, play the music
+    musicButton = this.add.image(700, 50, 'musicButton').setInteractive();
+    musicButton.on('pointerdown', function (event) {
+        if (music.isPlaying) {
+            music.stop();
+        } else {
+            music.play();
+        }
+    });
+
+
+    // when the restartLevelButton is clicked, restart the level by reloading the page
+    restartLevelButton = this.add.image(750, 50, 'restartLevelButton').setInteractive();
+    restartLevelButton.on('pointerdown', function (event) {
+        window.location.reload();
+    });
+
+
+    // when the returnMenuButton is clicked, return to the index.html page
+    returnMenuButton = this.add.image(650, 50, 'returnMenuButton').setInteractive();
+    returnMenuButton.on('pointerdown', function (event) {
+        window.location.href = "index.html";
+    });
+
+    // the buttons should be located on top right of the screen and should follow the camera
+    musicButton.setScrollFactor(0);
+    restartLevelButton.setScrollFactor(0);
+    returnMenuButton.setScrollFactor(0);
+
+    // make the restartLevel button a little smaller
+    restartLevelButton.setScale(0.8);
 
     jumpSound = this.sound.add('jumpSound');
     mapLevelMusic = this.sound.add('mapLevelMusic');
@@ -121,6 +179,45 @@ function create ()
     });
     text.setScrollFactor(0);
     updateText();
+
+     //add a timer
+     var updateTimer = function() {
+        totalElapsedSeconds++;
+        var minutes = Math.floor(totalElapsedSeconds / 60);
+        var seconds = totalElapsedSeconds - minutes * 60;
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        timer.setText("Time: " + minutes + ":" + seconds);
+        if (coinsCollected == totalCoins) {
+            // pause the timer
+            this.time.paused = true;
+            // stop the player from moving
+            player.body.moves = false;
+            // play the mapCompleteSound
+            mapCompleteSound.play();
+
+        }
+        if (this.time.paused == true) {
+            text.setText("Game Over! You collected all " + coinsCollected + " coins in " + minutes + " minutes and " + seconds + " seconds" +  "\n Click the arrow to play again!");
+    
+        }
+
+    
+    };
+
+    
+    timer = this.add.text(15, 75, '0:00', {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
+    timer.setScrollFactor(0);
+    this.time.addEvent({
+        delay: 1000,
+        callback: updateTimer,
+        callbackScope: this,
+        loop: true
+    });
 }
 
 
@@ -154,15 +251,11 @@ function hitSpike (player, spike)
     player.x = 80;
     player.y = 70;
     updateText();
-}
-
-// When the player's health reaches 0, the game ends and a message is displayed
-function updateText ()
-{
-    if (health == 0) {
-        text.setText('Game Over');
-    } else {
-        text.setText('Coins: ' + coinsCollected + ' Lives: ' + health);
+    // if the player has no health left, end the game
+    if (health == 0)
+    {
+        // refresh the page to restart the game
+        window.location.reload();
     }
 }
 
@@ -212,6 +305,6 @@ function updateText ()
     text.setText(
         'Arrow keys to move. Space to jump' +
         '\nCrystals Collected: ' + coinsCollected + '/15' +
-        '\nLives: ' + health
+        '\nLives: ' + health + '/5'
     );
 }

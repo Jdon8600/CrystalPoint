@@ -43,6 +43,11 @@ var resumeGameButton;
 var pauseGameButton;
 var health = 3;
 var gamePaused = false;
+var timer;
+var totalElapsedSeconds = 0;
+var totalCoins = 10;
+
+
 
 function preload ()
 {
@@ -71,6 +76,10 @@ function preload ()
 
 function create ()
 {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0588f07a859443236b1cbedca769ea012565236c
     map = this.make.tilemap({ key: 'map' });
     var groundTiles = map.addTilesetImage('ground_1x1');
     var coinTiles = map.addTilesetImage('coin');
@@ -86,7 +95,7 @@ function create ()
     music.play();
 
     // when the musicButton is clicked, stop playing the music, if it is pressed again, play the music
-    musicButton = this.add.image(750, 50, 'musicButton').setInteractive();
+    musicButton = this.add.image(700, 50, 'musicButton').setInteractive();
     musicButton.on('pointerdown', function (event) {
         if (music.isPlaying) {
             music.stop();
@@ -95,49 +104,22 @@ function create ()
         }
     });
 
-    // create a function pause that stops the game from updating and rendering
-    function pause(context) {
-        context.scene.pause();
-        gamePaused = true;
-    }
-
-    // create a function resume that resumes the game from updating and rendering
-    function resume(context) {
-        context.scene.resume();
-        gamePaused = false;
-    }
-
-    // when the pauseGameButton is clicked, pause the game
-    pauseGameButton = this.add.image(700, 50, 'pauseGameButton').setInteractive();
-    pauseGameButton.on('pointerdown', function (event) {
-        pause(this);
-    });
-
-    // when the resumeGameButton is clicked, resume the game
-
-    resumeGameButton = this.add.image(650, 50, 'resumeGameButton').setInteractive();
-    resumeGameButton.on('pointerdown', function (event) {
-        resume(this);
-    });
-
 
     // when the restartLevelButton is clicked, restart the level by reloading the page
-    restartLevelButton = this.add.image(600, 50, 'restartLevelButton').setInteractive();
+    restartLevelButton = this.add.image(750, 50, 'restartLevelButton').setInteractive();
     restartLevelButton.on('pointerdown', function (event) {
         window.location.reload();
     });
 
 
     // when the returnMenuButton is clicked, return to the index.html page
-    returnMenuButton = this.add.image(550, 50, 'returnMenuButton').setInteractive();
+    returnMenuButton = this.add.image(650, 50, 'returnMenuButton').setInteractive();
     returnMenuButton.on('pointerdown', function (event) {
         window.location.href = "index.html";
     });
 
     // the buttons should be located on top right of the screen and should follow the camera
     musicButton.setScrollFactor(0);
-    pauseGameButton.setScrollFactor(0);
-    resumeGameButton.setScrollFactor(0);
     restartLevelButton.setScrollFactor(0);
     returnMenuButton.setScrollFactor(0);
 
@@ -195,6 +177,61 @@ function create ()
     });
     text.setScrollFactor(0);
     updateText();
+
+    //add a timer
+    var updateTimer = function() {
+        totalElapsedSeconds++;
+        var minutes = Math.floor(totalElapsedSeconds / 60);
+        var seconds = totalElapsedSeconds - minutes * 60;
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        timer.setText("Time: " + minutes + ":" + seconds);
+        // if coinsCollected == totalCoins, stop the timer
+        if (coinsCollected == totalCoins) {
+            // pause the timer
+            this.time.paused = true;
+            // stop the player from moving
+            player.body.moves = false;
+            // play the mapCompleteSound
+            mapCompleteSound.play();
+
+        }
+        if (this.time.paused == true) {
+            text.setText("Game Over! You collected all " + coinsCollected + " coins in " + minutes + " minute/s and " + seconds + " seconds" +  "\n Click the arrow to play again!");
+    
+        }
+    
+
+    };
+
+    
+    timer = this.add.text(15, 75, '0:00', {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
+    timer.setScrollFactor(0);
+    this.time.addEvent({
+        delay: 1000,
+        callback: updateTimer,
+        callbackScope: this,
+        loop: true
+    });
+
+    let highScore = localStorage.getItem('highScore');
+    localStorage.setItem('highScore', highScore);
+    // if the highScore is null, set it to 0
+    if (highScore === null) {
+        highScore = 0;
+    }
+    // if the highScore is less than the totalElapsedSeconds, set the highScore to the totalElapsedSeconds
+    if (highScore < totalElapsedSeconds) {
+        highScore = totalElapsedSeconds;
+    }
+    // set the highScore to the totalElapsedSeconds
+    localStorage.setItem('highScore', totalElapsedSeconds);
+
+
 }
 
 
@@ -217,7 +254,6 @@ function hitCoin (sprite, tile)
 }
 
 
-
 // create a function to handle the player hitting a spike
 // when the player hits a spike, they lose a health point and are moved back to the start
 function hitSpike (player, spike)
@@ -230,24 +266,19 @@ function hitSpike (player, spike)
     player.x = 80; 
     player.y = 70; 
     updateText();
+
+
     // if the player has no health left, end the game
     if (health == 0)
     {
-        gameOver();
+        // refresh the page to restart the game
+        window.location.reload();
     }
-
 
 }
 
-// When the player's health reaches 0, the game ends and a message is displayed
-function updateText ()
-{
-    if (health == 0) {
-        text.setText('Game Over');
-    } else {
-        text.setText('Coins: ' + coinsCollected + ' Health: ' + health);
-    }
-}
+
+
 
 
 function update (time, delta) 
@@ -292,11 +323,16 @@ function drawDebug ()
     updateText();
 }
 
+
+
+
+
+// create a function to update the text on the screen
 function updateText ()
 {
     text.setText(
         'Arrow keys to move. Space to jump' +
         '\nCrystals collected: ' + coinsCollected + '/10' +
-        '\nLives: ' + health
-    );
+        '\nLives: ' + health + '/3');
+
 }
