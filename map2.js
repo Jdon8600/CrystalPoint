@@ -72,7 +72,15 @@ function preload ()
 
 function create ()
 {
+    /*map = this.make.tilemap({ key: 'map' });
+    var groundTiles = map.addTilesetImage('ground_1x1');
+    var coinTiles = map.addTilesetImage('coin');
+    var spikeTiles = map.addTilesetImage('spikes');
 
+    var backgroundLayer = map.createStaticLayer('Background Layer', groundTiles, 0, 0);
+    var groundLayer = map.createStaticLayer('Ground Layer', groundTiles, 0, 0);
+    var coinLayer = map.createDynamicLayer('Coin Layer', coinTiles, 0, 0);
+    var spikeLayer = map.createStaticLayer('Spike Layer', spikeTiles, 0, 0);*/
     map = this.make.tilemap({ key: 'map' });
     var groundTiles = map.addTilesetImage('ground_1x1');
     var coinTiles = map.addTilesetImage('coin');
@@ -134,7 +142,12 @@ function create ()
 
     spikeLayer.setTileIndexCallback(27, hitSpike, this);
 
+    // This will set the map location (2, 0) to call the function "hitSecretDoor" Un-comment this to
+    // be jump through the ceiling above where the player spawns. You can use this to create a
+    // secret area.
+    //groundLayer.setTileLocationCallback(2, 0, 1, 1, hitSecretDoor, this);
 
+    //
 
     player = this.physics.add.sprite(80, 70, 'player')
         .setBounce(0.0);
@@ -185,7 +198,7 @@ function create ()
 
         }
         if (this.time.paused == true) {
-            text.setText("Game Over! You collected all " + coinsCollected + " coins in " + minutes + " minute/s and " + seconds + " seconds" +  "\n Click the arrow to play again!");
+            text.setText("Game Over! You collected all " + coinsCollected + " coins in " + minutes + " minutes and " + seconds + " seconds" +  "\n Click the arrow to play again!");
     
         }
     };
