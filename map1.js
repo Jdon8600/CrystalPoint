@@ -71,15 +71,6 @@ function preload ()
 
 function create ()
 {
-    /*map = this.make.tilemap({ key: 'map' });
-    var groundTiles = map.addTilesetImage('ground_1x1');
-    var coinTiles = map.addTilesetImage('coin');
-    var spikeTiles = map.addTilesetImage('spikes');
-
-    var backgroundLayer = map.createStaticLayer('Background Layer', groundTiles, 0, 0);
-    var groundLayer = map.createStaticLayer('Ground Layer', groundTiles, 0, 0);
-    var coinLayer = map.createDynamicLayer('Coin Layer', coinTiles, 0, 0);
-    var spikeLayer = map.createStaticLayer('Spike Layer', spikeTiles, 0, 0);*/
     map = this.make.tilemap({ key: 'map' });
     var groundTiles = map.addTilesetImage('ground_1x1');
     var coinTiles = map.addTilesetImage('coin');
