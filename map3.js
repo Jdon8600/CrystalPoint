@@ -199,7 +199,7 @@ function create ()
 
         }
         if (this.time.paused == true) {
-            text.setText("Game Over! You collected all " + coinsCollected + " coins in " + minutes + " minutes and " + seconds + " seconds" +  "\n Click the arrow to play again!");
+            text.setText("You win! You collected all " + coinsCollected + " coins in " + minutes + " minute/s and " + seconds + " seconds" +  "\n You can play this map level again or Return to the Main Menu!");
     
         }
 
