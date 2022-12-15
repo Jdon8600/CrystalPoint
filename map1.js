@@ -230,6 +230,19 @@ function create ()
     // set the highScore to the totalElapsedSeconds
     localStorage.setItem('highScore', totalElapsedSeconds);
 
+    // have the player's name be set to "Guest Player" the name tag should be located on top of the player
+    // and follow the player
+    // First, create a new text object and add it to the game
+    playerName = this.add.text(0, 0, 'Guest Player', {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
+
+
+
+
+
+
 
 }
 
@@ -303,6 +316,13 @@ function update (time, delta)
         
 
     }
+    // set the player's name to the player's name
+    playerName.setText("Guest Player");
+    // set the player's name to follow the player
+    playerName.x = player.x - 50;
+    playerName.y = player.y - 50;
+
+    
 }
 
 function drawDebug ()
